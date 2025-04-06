@@ -4,18 +4,22 @@
 using namespace std;
 
 const int SIZE = 100;           // Square array size
-const int ITERATIONS = 100000; // Number of repetitions
+const int ITERATIONS = 22710; // Number of repetitions
 
 void static_arrays() {
    
      static int arr1[SIZE][SIZE];
      static int arr2[SIZE][SIZE];
+
+     return;
 }
 
 void stack_arrays() {
 
     int arr1[SIZE][SIZE];
     int arr2[SIZE][SIZE];
+
+    return;
 }
 
 void heap_arrays() {
@@ -34,6 +38,32 @@ void heap_arrays() {
 
     delete[] arr1;
     delete[] arr2;
+
+    return;
+}
+
+void heap_arrays_noDealocation() {
+    int iterations = 0; //Track Number of Iterations 
+
+    try {
+        while (true) {
+            int** arr1 = new int* [SIZE];  
+            int** arr2 = new int* [SIZE];
+
+            for (int i = 0; i < SIZE; ++i) {
+                arr1[i] = new int[SIZE];  
+                arr2[i] = new int[SIZE];
+            }
+
+            iterations++;  //Increment successful iterations
+        }
+    }
+    catch (const std::bad_alloc& e) {
+        //When memory allocation fails, print the number of successful iterations
+        cout << "Ran out of memory after " << iterations << " iterations\n";
+    }
+
+    return;
 }
 
 int main() {
@@ -70,6 +100,10 @@ int main() {
     duration = double(end - start) / CLOCKS_PER_SEC;
     //duration = double(end - start) / CLOCKS_PER_SEC;
     cout << setw(15) << "Heap Arrays" << " | " << setw(10) << duration << " s\n";
+
+    //Heap Array No Dealocation 
+    cout << "\nStarting heap_arrays_noDealocation function:\n";
+    heap_arrays_noDealocation();
 
     return 0;
 }
